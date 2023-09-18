@@ -1,57 +1,32 @@
 import React from 'react';
-import {View, Text, Image, FlatList, StyleSheet} from 'react-native';
-import {Product} from '../../../../state';
+import {FlatList, RefreshControl, StyleSheet} from 'react-native';
 
-type ProductListProps = {
-  products: Product[];
-};
+import {Product, useProductsContext} from '../../../../state';
+import {getItemLayout, ProductCard} from './productCard';
 
-const ProductList: React.FC<ProductListProps> = ({products}) => {
-  const renderItem = ({item}: {item: Product}) => (
-    <View style={styles.productContainer}>
-      <Image source={{uri: item.image}} style={styles.productImage} />
-      <Text style={styles.productName}>{item.name}</Text>
-      <Text style={styles.productDescription}>{item.description}</Text>
-      <Text style={styles.productPrice}>${item.price.toFixed(2)}</Text>
-    </View>
-  );
+const renderItem = ({item}: {item: Product}) => <ProductCard product={item} />;
+const keyExtractor = (item: Product) => item.id.toString();
+
+const ProductList: React.FC = () => {
+  const {loading, products, reloadProducts} = useProductsContext();
 
   return (
     <FlatList
       data={products}
       renderItem={renderItem}
-      keyExtractor={item => item.id.toString()}
+      keyExtractor={keyExtractor}
+      getItemLayout={getItemLayout}
       contentContainerStyle={styles.listContainer}
+      refreshControl={
+        <RefreshControl refreshing={loading} onRefresh={reloadProducts} />
+      }
     />
   );
 };
 
 const styles = StyleSheet.create({
   listContainer: {
-    padding: 10,
-  },
-  productContainer: {
-    borderWidth: 1,
-    borderColor: 'gray',
-    padding: 10,
-    marginVertical: 5,
-    borderRadius: 5,
-  },
-  productImage: {
-    width: 100,
-    height: 100,
-    marginBottom: 10,
-  },
-  productName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  productDescription: {
-    marginVertical: 5,
-  },
-  productPrice: {
-    marginTop: 5,
-    color: 'green',
+    padding: 20,
   },
 });
 
