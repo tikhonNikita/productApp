@@ -16,7 +16,11 @@ export const RootNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="ProductList" component={ProductListScreen} />
+        <Stack.Screen
+          name="ProductList"
+          component={ProductListScreen}
+          options={{headerShown: false}}
+        />
         <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>

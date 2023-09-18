@@ -56,8 +56,10 @@ const styles = StyleSheet.create({
     height: 200,
   },
   productContainer: {
-    padding: 10,
-    marginVertical: 5,
+    marginVertical: 10,
+    marginHorizontal: 30,
+    padding: 20,
+    alignSelf: 'center',
     borderRadius: 5,
     width: width - 40,
     height: 300,
