@@ -1,31 +1,47 @@
-import React from 'react';
-import {RefreshControl} from 'react-native';
-import Animated, {
-  Extrapolate,
-  interpolate,
-  useAnimatedScrollHandler,
-  useAnimatedStyle,
-  useSharedValue,
-} from 'react-native-reanimated';
+import React, {useState} from 'react';
+import {
+  FlatList,
+  LayoutAnimation,
+  RefreshControl,
+  TextInput,
+} from 'react-native';
 
 import {Product, useProductsContext} from '../../../../state';
 import {getItemLayout, ProductCard} from './productCard';
-import {Text} from 'react-native-paper';
+import {Appbar, Searchbar} from 'react-native-paper';
 
-const HEADER_HEIGHT = 75;
+const Header: React.FC = () => {
+  const [isExpanded, setIsExpanded] = React.useState(false);
+  const ref = React.useRef<TextInput>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
-type HeaderProps = {
-  style: ReturnType<typeof useAnimatedStyle>;
-};
-const Header: React.FC<HeaderProps> = ({style}) => {
   return (
-    <Animated.View
-      style={[
-        {height: HEADER_HEIGHT, width: '100%', backgroundColor: 'green'},
-        style,
-      ]}>
-      <Text>HEADER</Text>
-    </Animated.View>
+    <Appbar.Header>
+      <Searchbar
+        onIconPress={() => {
+          LayoutAnimation.configureNext({
+            ...LayoutAnimation.Presets.linear,
+            duration: 200,
+          });
+          setIsExpanded(true);
+          ref.current?.focus();
+        }}
+        onChangeText={setSearchQuery}
+        ref={ref}
+        inputStyle={{
+          height: 30,
+        }}
+        value={searchQuery}
+        onBlur={() => {
+          setSearchQuery('');
+          setIsExpanded(false);
+        }}
+        style={{width: isExpanded ? '100%' : 0}}
+      />
+      {!isExpanded && (
+        <Appbar.Content title="Product List" style={{paddingLeft: 50}} />
+      )}
+    </Appbar.Header>
   );
 };
 
@@ -35,36 +51,14 @@ const keyExtractor = (item: Product) => item.id.toString();
 const ProductList: React.FC = () => {
   const {loading, products, reloadProducts} = useProductsContext();
 
-  const scrollClamp = useSharedValue(0);
-
-  const scrollHandler = useAnimatedScrollHandler({
-    onScroll: event => {
-      scrollClamp.value = event.contentOffset.y;
-    },
-  });
-
-  const animatedMargin = useAnimatedStyle(() => {
-    const interpolateY = interpolate(
-      scrollClamp.value,
-      [10, HEADER_HEIGHT * 1.1],
-      [0, HEADER_HEIGHT],
-      Extrapolate.CLAMP,
-    );
-
-    return {
-      paddingTop: interpolateY,
-    };
-  });
-
   return (
-    <Animated.FlatList
+    <FlatList
       showsVerticalScrollIndicator={false}
-      onScroll={scrollHandler}
       data={products}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
       getItemLayout={getItemLayout}
-      ListHeaderComponent={() => <Header style={animatedMargin} />}
+      ListHeaderComponent={<Header />}
       refreshControl={
         <RefreshControl refreshing={loading} onRefresh={reloadProducts} />
       }

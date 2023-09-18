@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {ProductDetailScreen, ProductListScreen} from '../screens';
+import {Appbar} from 'react-native-paper';
 
 export type RootStackParamList = {
   ProductList: undefined;

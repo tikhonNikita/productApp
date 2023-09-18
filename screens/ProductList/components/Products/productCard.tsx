@@ -10,7 +10,8 @@ import Animated from 'react-native-reanimated';
 
 const width = Dimensions.get('window').width;
 
-const ITEM_HEIGHT = 300;
+const ITEM_HEIGHT = 320;
+const DETAILS = 'Details';
 
 export const getItemLayout = (data: unknown, index: number) => ({
   length: ITEM_HEIGHT,
@@ -41,7 +42,7 @@ const _ProductCard = ({product}: {product: Product}) => {
           <Text style={styles.productPrice}>${product.price.toFixed(2)}</Text>
         </Card.Content>
         <Card.Actions>
-          <Button onPress={goToDetails}>Details</Button>
+          <Button onPress={goToDetails}>{DETAILS}</Button>
         </Card.Actions>
       </View>
     </Card>
@@ -51,18 +52,13 @@ const _ProductCard = ({product}: {product: Product}) => {
 export const ProductCard = React.memo(_ProductCard);
 
 const styles = StyleSheet.create({
-  imageSurface: {
-    borderRadius: 10,
-    height: 200,
-  },
   productContainer: {
     marginVertical: 10,
-    marginHorizontal: 30,
     padding: 20,
     alignSelf: 'center',
     borderRadius: 5,
     width: width - 40,
-    height: 300,
+    height: ITEM_HEIGHT,
   },
   productImage: {
     width: '100%',

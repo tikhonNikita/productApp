@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView} from 'react-native';
+import { SafeAreaView, View } from "react-native";
 
 import {useProductsContext} from '../../state';
 import ProductList from './components/Products';
@@ -15,12 +15,12 @@ export const ProductListScreen = () => {
   console.log('BY ID', getProductById(1));
 
   return (
-    <SafeAreaView
+    <View
       style={{
         width: '100%',
         height: '100%',
       }}>
       <ProductList />
-    </SafeAreaView>
+    </View>
   );
 };
