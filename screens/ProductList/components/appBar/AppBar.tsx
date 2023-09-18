@@ -13,7 +13,7 @@ export const AppBar: React.FC = () => {
   const expandSearchInput = () => {
     LayoutAnimation.configureNext({
       ...LayoutAnimation.Presets.linear,
-      duration: 200,
+      duration: 300,
     });
     setIsExpanded(true);
     ref.current?.focus();
