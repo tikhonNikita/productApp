@@ -1,8 +1,8 @@
 import React from 'react';
+import {Platform, UIManager} from 'react-native';
 
 import {RootNavigator} from './navigation/rootNavigator';
-import {ProductsProvider} from './state/ProductsContext';
-import { Platform, UIManager } from "react-native";
+import {ProductsProvider} from './state';
 
 function App(): Element {
   if (Platform.OS === 'android') {
