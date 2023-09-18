@@ -1,2 +1,2 @@
-export {ProductListScreen} from './ProductList/ProductListScreen';
-export {ProductDetailScreen} from './ProductDetail/ProductDetailScreen';
+export {ProductDetailScreen, DetailsAppBar} from './ProductDetail';
+export {ProductList} from './ProductList/components';
