@@ -9,17 +9,13 @@ import {
 import Animated from 'react-native-reanimated';
 import {StyleSheet} from 'react-native';
 
-
 import {RootStackParamList} from '../../navigation/rootNavigator';
 import {useProductsContext} from '../../state';
-
 import {ProductNotFound} from '../../components';
-
-type Props = {};
 
 type ScreenNavigationProp = NavigationProp<RootStackParamList, 'ProductDetail'>;
 
-export const ProductDetailScreen: React.FC<Props> = () => {
+export const ProductDetailScreen: React.FC = () => {
   const {getProductById} = useProductsContext();
 
   const navigation = useNavigation<ScreenNavigationProp>();

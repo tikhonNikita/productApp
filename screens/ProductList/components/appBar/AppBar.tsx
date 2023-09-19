@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
-import {LayoutAnimation, TextInput} from 'react-native';
-
-import {useProductsContext} from '../../../../state';
+import {LayoutAnimation, StyleSheet, TextInput} from 'react-native';
 import {Appbar, Searchbar} from 'react-native-paper';
 
+import {useProductsContext} from '../../../../state';
+
 export const AppBar: React.FC = () => {
-  const [isExpanded, setIsExpanded] = React.useState(false);
-  const ref = React.useRef<TextInput>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const {setFilter, clearFilter} = useProductsContext();
+
+  const ref = React.useRef<TextInput>(null);
 
   const expandSearchInput = () => {
     LayoutAnimation.configureNext({
@@ -26,7 +27,7 @@ export const AppBar: React.FC = () => {
   };
 
   const onSubmit = () => {
-    setFilter(searchQuery);
+    setFilter(searchQuery.trim());
   };
 
   const handleBlur = () => {
@@ -48,8 +49,14 @@ export const AppBar: React.FC = () => {
         style={{width: isExpanded ? '100%' : 0}}
       />
       {!isExpanded && (
-        <Appbar.Content title="Product List" style={{paddingLeft: 50}} />
+        <Appbar.Content title="Product List" style={styles.content} />
       )}
     </Appbar.Header>
   );
 };
+
+const styles = StyleSheet.create({
+  content: {
+    paddingLeft: 50,
+  },
+});

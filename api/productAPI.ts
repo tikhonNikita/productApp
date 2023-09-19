@@ -1,4 +1,4 @@
-import {Product} from '../state/types';
+import {Product} from '../state';
 
 const PRODUCTS_URI =
   'https://dev-autibfbfinllwfr.api.raw-labs.com/your/endpoint/path';

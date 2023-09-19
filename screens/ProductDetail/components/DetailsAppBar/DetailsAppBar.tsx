@@ -1,7 +1,8 @@
 import React, {ReactNode} from 'react';
 import {Appbar} from 'react-native-paper';
-import {useProductsContext} from '../../../../state';
 import {NativeStackHeaderProps} from '@react-navigation/native-stack';
+
+import {useProductsContext} from '../../../../state';
 
 export const DetailsAppBar: (
   props: NativeStackHeaderProps,

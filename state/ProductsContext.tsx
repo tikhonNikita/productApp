@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import {
   createContext,
@@ -7,7 +7,6 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useMemo,
   useReducer,
   useState,
 } from 'react';
@@ -15,6 +14,7 @@ import {
 import {fetchProducts} from '../api';
 import {initialState, ProductsActionKind, reducer} from './productsReducer';
 import {Product, ProductsContextType} from './types';
+import {useFilteredProducts} from './hooks/useFilteredProducts';
 
 const ProductsContext = createContext<ProductsContextType>({
   error: '',
@@ -38,7 +38,6 @@ export const useProductsContext = () => {
 
 export const ProductsProvider: FC<PropsWithChildren> = ({children}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [filterValue, setFilterValue] = useState('');
   const [normalizedProducts, setNormalizedProducts] = useState<
     Record<number, Product>
   >({});
@@ -75,25 +74,13 @@ export const ProductsProvider: FC<PropsWithChildren> = ({children}) => {
     }
   }, [state.products]);
 
-  const filteredProducts = useMemo(
-    () =>
-      state.products.filter(p =>
-        p.name.toLowerCase().includes(filterValue.toLowerCase()),
-      ),
-    [filterValue, state.products],
-  );
-
-  const setFilter = useCallback((value: string) => {
-    setFilterValue(value);
-  }, []);
-
-  const clearFilter = useCallback(() => {
-    setFilterValue('');
-  }, []);
-
   const getProductById = useCallback(
     (id: number) => normalizedProducts[id],
     [normalizedProducts],
+  );
+
+  const {filteredProducts, setFilter, clearFilter} = useFilteredProducts(
+    state.products,
   );
 
   return (

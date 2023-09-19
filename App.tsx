@@ -9,6 +9,10 @@ if (Platform.OS === 'android') {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
 }
+
+import {LogBox} from 'react-native';
+LogBox.ignoreAllLogs();
+
 function App(): Element {
   return (
     <ProductsProvider>

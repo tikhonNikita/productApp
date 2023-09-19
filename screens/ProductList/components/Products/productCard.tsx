@@ -1,17 +1,17 @@
 import React from 'react';
 
-import {Card, Text, Button} from 'react-native-paper';
 import {Dimensions, StyleSheet, View} from 'react-native';
+import {Card, Text, Button} from 'react-native-paper';
+import Animated from 'react-native-reanimated';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 import {Product} from '../../../../state';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../../../navigation/rootNavigator';
-import Animated from 'react-native-reanimated';
+import {appStrings} from '../../../../utils';
 
 const width = Dimensions.get('window').width;
 
 const ITEM_HEIGHT = 320;
-const DETAILS = 'Details';
 
 export const getItemLayout = (data: unknown, index: number) => ({
   length: ITEM_HEIGHT,
@@ -21,7 +21,11 @@ export const getItemLayout = (data: unknown, index: number) => ({
 
 type ScreenNavigationProp = NavigationProp<RootStackParamList, 'ProductList'>;
 
-const _ProductCard = ({product}: {product: Product}) => {
+type ProductCardProps = {
+  product: Product;
+};
+
+const _ProductCard = ({product}: ProductCardProps) => {
   const navigation = useNavigation<ScreenNavigationProp>();
 
   const goToDetails = () =>
@@ -42,7 +46,7 @@ const _ProductCard = ({product}: {product: Product}) => {
           <Text style={styles.productPrice}>${product.price.toFixed(2)}</Text>
         </Card.Content>
         <Card.Actions>
-          <Button onPress={goToDetails}>{DETAILS}</Button>
+          <Button onPress={goToDetails}>{appStrings.details}</Button>
         </Card.Actions>
       </View>
     </Card>
