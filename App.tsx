@@ -10,9 +10,6 @@ if (Platform.OS === 'android') {
   }
 }
 
-import {LogBox} from 'react-native';
-LogBox.ignoreAllLogs();
-
 function App(): Element {
   return (
     <ProductsProvider>
