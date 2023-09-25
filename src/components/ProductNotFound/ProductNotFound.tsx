@@ -16,7 +16,7 @@ export const ProductNotFound: React.FC<Props> = ({goBack}) => {
       <View style={styles.contentContainer}>
         <LottieView
           style={styles.lottie}
-          source={require('../../assets/empty.json')}
+          source={require('../../../assets/empty.json')}
           autoPlay
           loop
         />

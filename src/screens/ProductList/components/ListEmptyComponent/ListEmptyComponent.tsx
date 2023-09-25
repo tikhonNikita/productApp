@@ -17,7 +17,7 @@ export const ListEmptyComponent: React.FC<Props> = ({loading}) => {
       <View style={styles.contentContainer}>
         <LottieView
           style={styles.lottie}
-          source={require('../../../../assets/loading.json')}
+          source={require('../../../../../assets/loading.json')}
           autoPlay
           loop
         />
